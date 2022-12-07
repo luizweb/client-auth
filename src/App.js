@@ -2,6 +2,7 @@ import './App.css';
 
 import {Routes, Route} from 'react-router-dom';
 import {Toaster} from 'react-hot-toast';
+
 import NavbarMenu from './components/Navbar';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -10,9 +11,7 @@ import SignUpPage from './pages/SignUpPage';
 import ProfilePage from './pages/ProfilePage';
 
 import {AuthContextComponent} from './contexts/authContext';
-
 import ProtectRoute from './components/ProtectRoute';
-
 
 function App() {
   return (

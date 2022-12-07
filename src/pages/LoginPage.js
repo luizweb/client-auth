@@ -1,18 +1,16 @@
+import {useState, useContext} from 'react';
+import {AuthContext} from '../contexts/authContext';
+import api from '../api/api.js';
+
+import {Link, useNavigate} from 'react-router-dom';
 import {Container,Row,Col,Button,Form,InputGroup,Image} from 'react-bootstrap';
 import toast from 'react-hot-toast';
 
-import {Link, useNavigate} from 'react-router-dom';
-
-import {useState, useContext} from 'react';
-
-import {AuthContext} from '../contexts/authContext';
-
-import api from '../api/api.js';
-
 function LoginPage() {
-    const navigate = useNavigate();
-
+    
     const {setLoggedInUser} = useContext(AuthContext);
+    
+    const navigate = useNavigate();    
 
     const [form, setForm] = useState({
         email: "",
@@ -26,28 +24,19 @@ function LoginPage() {
     async function handleSubmit(e) {
         e.preventDefault()
         try {
-            const response = await api.post("http://localhost:8080/user/login", form);
-            console.log(response.data);
-            toast.success('Welcome!');
+            const response = await api.post("/user/login", form);
             
-           
-
-            // ---- LOCAL STORAGE ----
-            // setItem --> coloca algo dentro do localStorage. Parâmetros: key: value.
-            // getItem --> pegar alguma coisa do localstorage
-            // removeItem --> remover alguma coisa do localstorage
-            // OBJETO PARA JSON --> STRINGIFY
-            localStorage.setItem("loggedInUser", JSON.stringify(response.data));
-
-            // atualizar o contexto
             setLoggedInUser({...response.data});
+
+            localStorage.setItem("loggedInUser", JSON.stringify(response.data));
 
             /*
             if (response.data.user.role === "ADMIN"){
                 navigate("/admin")
             }
             */
-
+           
+            toast.success('Welcome!');
             navigate("/profile");
 
         } catch (error) {
