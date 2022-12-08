@@ -25,9 +25,16 @@ function NavbarMenu(){
                 )}
 
                 
+
+                
                 
                 {loggedInUser && (
                   <>
+
+                  {loggedInUser.user.role === "ADMIN" && (
+                    <Link to='/admin'><Button variant="dark" className="mx-2">ADMIN</Button></Link>
+                  )}
+
                   <span className="text-white mx-2">{loggedInUser.user.name} </span>
                   <Link to='/profile' className="text-white">
                     

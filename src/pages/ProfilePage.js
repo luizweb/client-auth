@@ -1,49 +1,19 @@
-import {Container,Row,Col,Button,Form} from 'react-bootstrap';
-
 import {useState, useEffect, useContext} from 'react';
-
 import {Link, useNavigate} from 'react-router-dom';
 
-import { AuthContext } from "../contexts/authContext";
+import {Container,Row,Col,Button,Form} from 'react-bootstrap';
+import toast from 'react-hot-toast';
 
 import api from "../api/api";
+import {AuthContext} from "../contexts/authContext";
+
 
 function ProfilePage() {
     
+    const { setLoggedInUser } = useContext(AuthContext);    
     const navigate = useNavigate();
-
-    const [img, setImg] = useState();
-
-    const { setLoggedInUser } = useContext(AuthContext);
-
+    const [img, setImg] = useState("");    
     const [user, setUser] = useState({});
-
-    useEffect(() => {
-        async function fetchUser() {
-          try {
-            // usando a configuração do axios (api) - não precisa escrever o endereço http://localhost etc
-            const response = await api.get("/user/profile");
-            //console.log(response.data);
-            setUser(response.data);
-          } catch (error) {
-            console.log(error);
-          }
-        }
-    
-        fetchUser();
-      }, []);
-
-
-    function signOut(){
-      localStorage.removeItem("loggedInUser");
-
-      //atualizar o meu context
-      setLoggedInUser(null);
-
-      navigate("/");
-    }
-    
-    
     const [showForm, setShowForm] = useState(false);
     const [form, setForm] = useState({
       name: "",
@@ -52,18 +22,34 @@ function ProfilePage() {
       confirmPassword: ""
     })
 
+    useEffect(() => {
+        async function fetchUser() {
+          try {
+            const response = await api.get("/user/profile");
+            setUser(response.data);
+          } catch (error) {
+            console.log(error);
+          }
+        }    
+        fetchUser();
+      }, []);
+
+
+    function signOut(){
+      localStorage.removeItem("loggedInUser");
+      setLoggedInUser(null);
+      navigate("/");
+    };
+    
     function handleChange(e) {
         console.log(form);
         setForm({...form , [e.target.name] : e.target.value});
         
-    }
+    };
 
     function handleImage(e){
-        //console.log(e.target.files[0]);
         setImg(e.target.files[0]);
-
-        handleUpload();
-    }
+    };
 
     async function handleUpload(e){
         try {
@@ -78,12 +64,18 @@ function ProfilePage() {
 
     async function handleSubmit(e) {
         e.preventDefault()
+        
+        //const imgUrl = await handleUpload();
+
         try {
-            //axios
-            // FAZER
+            //await api.post("/user/signup", {...form, profilePic: imgUrl});
+            toast.success('User successfully edited!')
+            navigate("/login");
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            toast.error("Error when editing a user.");
         }
+
     }
 
     

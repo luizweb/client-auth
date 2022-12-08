@@ -30,14 +30,8 @@ function LoginPage() {
 
             localStorage.setItem("loggedInUser", JSON.stringify(response.data));
 
-            /*
-            if (response.data.user.role === "ADMIN"){
-                navigate("/admin")
-            }
-            */
-           
             toast.success('Welcome!');
-            navigate("/profile");
+            navigate("/");
 
         } catch (error) {
             console.log(error);
@@ -94,12 +88,11 @@ function LoginPage() {
 
           </Col>
           <Col></Col>
-        </Row>
-
-        
+        </Row>       
                        
         </Container>  
      );
 }
 
 export default LoginPage;
+
