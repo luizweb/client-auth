@@ -10,7 +10,7 @@ import {AuthContext} from "../contexts/authContext";
 
 function ProfilePage() {
     
-    const { setLoggedInUser } = useContext(AuthContext);    
+    const {setLoggedInUser } = useContext(AuthContext);    
     const navigate = useNavigate();
     const [img, setImg] = useState("");    
     const [user, setUser] = useState({});
@@ -24,11 +24,14 @@ function ProfilePage() {
 
     useEffect(() => {
         async function fetchUser() {
+          
+          
+          
           try {
             const response = await api.get("/user/profile");
             setUser(response.data);
           } catch (error) {
-            console.log(error);
+              console.log(error);
           }
         }    
         fetchUser();

@@ -15,7 +15,7 @@ function NavbarMenu(){
         <Navbar bg="primary">
             <Container>
             <Link to='/'><Navbar.Brand className='fs-3 text-white'>luizweb</Navbar.Brand></Link>
-              <div>
+              <div className="d-flex">
                 
                 {!loggedInUser && (
                   <>
@@ -32,14 +32,18 @@ function NavbarMenu(){
                   <>
 
                   {loggedInUser.user.role === "ADMIN" && (
+                    <div className="d-flex">
+                    <Link className="nav-link" to="/notificacoes"><Button variant="dark" className="mx-2">LOG</Button></Link>
                     <Link to='/admin'><Button variant="dark" className="mx-2">ADMIN</Button></Link>
+                    </div>
                   )}
 
-                  <span className="text-white mx-2">{loggedInUser.user.name} </span>
-                  <Link to='/profile' className="text-white">
-                    
+                  <div className="d-flex">
+                  <span className="text-white mx-2">{loggedInUser.user.name} </span> 
+                  <Link to='/profile' className="text-white">                    
                     <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" width="35px" alt="user" /> 
                   </Link>
+                  </div>
                   
                   </>
                 )}

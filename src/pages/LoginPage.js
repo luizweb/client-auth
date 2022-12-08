@@ -24,18 +24,18 @@ function LoginPage() {
     async function handleSubmit(e) {
         e.preventDefault()
         try {
-            const response = await api.post("/user/login", form);
-            
+            const response = await api.post("/user/login", form);            
+            localStorage.setItem("loggedInUser", JSON.stringify(response.data));
             setLoggedInUser({...response.data});
 
-            localStorage.setItem("loggedInUser", JSON.stringify(response.data));
+            
 
             toast.success('Welcome!');
             navigate("/");
 
         } catch (error) {
             console.log(error);
-            toast.error("Invalid email or password!");
+            toast.error("Invalid email or password! Make sure your email is confirmed");
         }
     }
     

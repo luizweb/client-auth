@@ -7,8 +7,6 @@ function HomePage(){
 
     const { loggedInUser } = useContext(AuthContext);
     
-    console.log(loggedInUser);
-
     return (        
             
         <Container className="mt-5">

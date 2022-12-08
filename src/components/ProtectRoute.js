@@ -5,9 +5,19 @@ import {Navigate} from 'react-router-dom';
 function ProtectRoute({Component}) {
     const {loggedInUser} = useContext(AuthContext)
 
-    if (loggedInUser){
+    //BUG? loggedInUser.token !== ""
+    
+    if (loggedInUser.token !== ""){
+        
+        console.log("A --> /profile") 
+        console.log(loggedInUser)
+        
         return <Component />
-    } else{
+    } else{   
+        
+        console.log("B --> /profile")  
+        console.log(loggedInUser)  
+
         return <Navigate to="/login" />
     }
 }
