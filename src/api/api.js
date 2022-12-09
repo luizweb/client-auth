@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiURLs = {
   development: "http://localhost:8080",
-  production: "http://<link-para-o-deploy-da-api>",
+  production: "https://dull-gray-turkey-wear.cyclic.app",
 };
 
 const api = axios.create({ baseURL: apiURLs[process.env.NODE_ENV] });
