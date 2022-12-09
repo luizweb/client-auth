@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import api from "../api/api";
 import {Link} from 'react-router-dom';
-import {Container, Table, Button} from 'react-bootstrap';
+import {Container, Table, Button, Pagination } from 'react-bootstrap';
 
 function NotificationPage() {
+  
   const [logs, setLogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -56,6 +57,26 @@ function NotificationPage() {
             </tbody>
             
          </Table>
+
+         <Pagination>
+          <Pagination.First />
+          <Pagination.Prev />
+          <Pagination.Item>{1}</Pagination.Item>
+          <Pagination.Ellipsis />
+
+          <Pagination.Item>{10}</Pagination.Item>
+          <Pagination.Item>{11}</Pagination.Item>
+          <Pagination.Item active>{12}</Pagination.Item>
+          <Pagination.Item>{13}</Pagination.Item>
+          <Pagination.Item disabled>{14}</Pagination.Item>
+
+          <Pagination.Ellipsis />
+          <Pagination.Item>{20}</Pagination.Item>
+          <Pagination.Next />
+          <Pagination.Last />
+        </Pagination>
+
+
 
             <Link to="/admin"><Button variant="primary">Back to Admin</Button></Link>
             
