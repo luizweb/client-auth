@@ -26,7 +26,10 @@ function AdminPage() {
 
     return ( 
         <Container className="mt-5">
-        <h4>Admin Page</h4>
+        
+               
+
+        <h4>Users</h4>
         <Table striped bordered hover className="mt-3">
             <thead>
                 <tr>
@@ -58,7 +61,10 @@ function AdminPage() {
             </tbody>
             
          </Table>
-         <Link to="/"><Button variant="primary">Back to home</Button></Link>
+         <div className="d-flex">
+            <Link to="/"><Button variant="primary">Back to home</Button></Link>
+            <Link className="nav-link" to="/logs"><Button variant="dark" className="mx-2">User Logs</Button></Link>
+         </div>
          </Container>
 
      );

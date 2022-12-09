@@ -5,8 +5,23 @@ import {Navigate} from 'react-router-dom';
 function ProtectRoute({Component}) {
     const {loggedInUser} = useContext(AuthContext)
 
-    //BUG? loggedInUser.token !== ""
+    const loggedInUserJSON = localStorage.getItem("loggedInUser");        
+    const parseLoggedInUser = JSON.parse(loggedInUserJSON || '""');
     
+    if (parseLoggedInUser){
+        console.log("LOGADO")
+        if (loggedInUser.token !== "" || parseLoggedInUser.token !== ""){
+            return <Component />
+        }
+    } else {
+        console.log("*NÃO LOGADO*");
+        return <Navigate to="/login" />
+    }
+
+
+
+    /*
+    //BUG? loggedInUser.token !== ""
     if (loggedInUser.token !== ""){
         
         console.log("A --> /profile") 
@@ -20,6 +35,7 @@ function ProtectRoute({Component}) {
 
         return <Navigate to="/login" />
     }
+    */
 }
 
 export default ProtectRoute;

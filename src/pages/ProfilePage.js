@@ -10,23 +10,25 @@ import {AuthContext} from "../contexts/authContext";
 
 function ProfilePage() {
     
-    const {setLoggedInUser } = useContext(AuthContext);    
+    const {setLoggedInUser} = useContext(AuthContext); 
+    
     const navigate = useNavigate();
+    
     const [img, setImg] = useState("");    
+    
     const [user, setUser] = useState({});
+    
     const [showForm, setShowForm] = useState(false);
+    const [reload, setReload] = useState(false);
+
     const [form, setForm] = useState({
       name: "",
-      email: "",
       password: "",
       confirmPassword: ""
     })
 
     useEffect(() => {
-        async function fetchUser() {
-          
-          
-          
+        async function fetchUser() {         
           try {
             const response = await api.get("/user/profile");
             setUser(response.data);
@@ -35,7 +37,7 @@ function ProfilePage() {
           }
         }    
         fetchUser();
-      }, []);
+      }, [reload]);
 
 
     function signOut(){
@@ -45,9 +47,7 @@ function ProfilePage() {
     };
     
     function handleChange(e) {
-        console.log(form);
-        setForm({...form , [e.target.name] : e.target.value});
-        
+        setForm({...form , [e.target.name] : e.target.value});    
     };
 
     function handleImage(e){
@@ -68,15 +68,25 @@ function ProfilePage() {
     async function handleSubmit(e) {
         e.preventDefault()
         
-        //const imgUrl = await handleUpload();
+        if (form.password !== form.confirmPassword) {
+            toast.error("Senhas incompatíveis!");
+            return;
+        }
+
+        const imgUrl = await handleUpload();
 
         try {
-            //await api.post("/user/signup", {...form, profilePic: imgUrl});
-            toast.success('User successfully edited!')
-            navigate("/login");
+            await api.put("/user/update", {...form, profilePic: imgUrl});
+            toast.success('User successfully updated!')
+            
+
+            setShowForm(!showForm);
+            setReload(!reload);
+            
+            
         } catch (error) {
             console.log(error);
-            toast.error("Error when editing a user.");
+            toast.error("Error when updating a user.");
         }
 
     }
@@ -138,14 +148,19 @@ function ProfilePage() {
                     <Col>
                     
                     <Form>                
+                        
+                        
+                        
                         <Form.Group className="mb-2" >                    
-                        <Form.Label>Name: </Form.Label>
-                        <Form.Control type="text" placeholder="Enter your name" name="name" onChange={handleChange} />                   
+                            <Form.Label>Name: </Form.Label>
+                            <Form.Control type="text" name="name" placeholder={user.name} value={form.name} onChange={handleChange} />        
+         
                         </Form.Group>
 
                         <Form.Group className="mb-2" >
-                            <Form.Label>Email: </Form.Label>
-                            <Form.Control type="email" placeholder="Enter your email" name="email" onChange={handleChange} />
+                            <Form.Label>E-mail: </Form.Label>
+                            <Form.Control placeholder={user.email} disabled />
+                            
                         </Form.Group>
 
                         <Form.Group className="mb-2">
@@ -164,7 +179,7 @@ function ProfilePage() {
                         </Form.Group>
 
                         
-                        <Button variant="primary" type="submit" onClick={()=>{setShowForm(!showForm)}}>Cancel</Button>
+                        <Button variant="primary" onClick={()=>{setShowForm(!showForm)}}>Cancel</Button>
                         <Button variant="warning" type="submit" className="mx-2" onClick={handleSubmit}>Update</Button>                  
                     </Form> 
 

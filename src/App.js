@@ -12,7 +12,7 @@ import ProfilePage from './pages/ProfilePage';
 import NotificationPage from "./pages/NotificationPage";
 import AdminPage from './pages/AdminPage';
 
-import {AuthContextComponent} from './contexts/authContext';
+import { AuthContextComponent } from "./contexts/authContext";
 import ProtectRoute from './components/ProtectRoute';
 import ProtectRouteAdmin from './components/ProtectRouteAdmin';
 
@@ -28,9 +28,8 @@ function App() {
           <Route path='/login' element={<LoginPage />}></Route>
           <Route path='/signup' element={<SignUpPage />}></Route>
           <Route path='/profile' element={<ProtectRoute Component={ProfilePage} />}></Route>
-          <Route path="/notificacoes" element={<ProtectRoute Component={NotificationPage} />}></Route>
+          <Route path="/logs" element={<ProtectRoute Component={NotificationPage} />}></Route>
           <Route path='/admin' element={<ProtectRouteAdmin Component={AdminPage} />}></Route>
-          
           <Route path='*' element={<ErrorPage />}></Route>
         </Routes>
       </AuthContextComponent>

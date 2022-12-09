@@ -31,7 +31,7 @@ function LoginPage() {
             
 
             toast.success('Welcome!');
-            navigate("/");
+            navigate("/profile");
 
         } catch (error) {
             console.log(error);

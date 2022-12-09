@@ -5,6 +5,8 @@ import {AuthContext} from '../contexts/authContext';
 
 function HomePage(){
 
+    
+
     const { loggedInUser } = useContext(AuthContext);
     
     return (        
